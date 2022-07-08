@@ -1,0 +1,76 @@
+﻿@model IEnumerable<MyLibrary.Models.Member>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using Microsoft.AspNetCore.Http;
+
+@{
+    var account = Context.Session.GetString("ACCOUNT");
+    if(account != null)
+    {        
+        <h1>Member Management</h1>
+
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Country)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {memberID = item.MemberId}) | 
+                        @Html.ActionLink("Details", "Details", new {memberID = item.MemberId}) | 
+                        @Html.ActionLink("Delete", "Delete", new {memberID = item.MemberId}) 
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h1>
+            Please Login           
+        </h1>
+        <a asp-controller="Account" asp-action="Index" >Login</a>
+        
+    }
+}   
+

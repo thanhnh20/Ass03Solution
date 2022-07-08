@@ -1,0 +1,42 @@
+﻿@model MyLibrary.Models.Member
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_LayoutMember.cshtml";
+}
+
+<h1>@Model.CompanyName Profile</h1>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("History Order", "OrderHistory", new {memberID = Model.MemberId}) <br/>
+    @Html.ActionLink("Edit", "Edit", new {memberID = Model.MemberId}) | 
+    <a asp-action="Index">Back to buy product</a>
+</div>

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MyLibrary.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutMember.cshtml";
+}
+<div >
+    <form class="search" style="margin: 25px auto 0; max-width: 400px; display: flex;">
+        <input type="text" class="form-control" type="search" placeholder="Product name">
+        <select class="form-select" aria-label="Default select example">
+          <option selected value="0" >Price Range</option>
+          <option value="1">0 - 10.000</option>
+          <option value="2">10.000 - 20.000</option>
+          <option value="3">20.000 above</option>
+        </select>
+        <button class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+    
+<h1>Product</h1>
+@{
+    if(ViewBag.ErrorMessage != null)
+    {
+        <h6 class="text-danger">
+            @ViewBag.ErrorMessage
+        </h6>
+    }
+
+    if(ViewBag.Message != null)
+    {
+        <h6 class="text-danger">
+            @ViewBag.Message
+            @Html.ActionLink("Click to view cart", "ViewCart")
+        </h6>
+    }
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitsInStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitsInStock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                <form method="post" asp-action="Index">
+                    <div class="form-group">
+                        <input type="hidden" value="@item.ProductId" name="productID"/>    
+                        <input type="submit" value="Add to cart" class="btn btn-outline-primary" />              
+                    </div>    
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

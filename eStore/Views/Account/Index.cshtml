@@ -1,0 +1,43 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body style= "padding: 10px;">
+        <h3 class="text-center">Login Page</h3>   
+    
+<div class="row">
+    <div class="col-md-3" style="margin: auto">
+    <form method="post" asp-controller="account" asp-action="login">   
+        @{
+        if(ViewBag.error != null)
+        {
+            <span  class="text-danger">@ViewBag.error</span>
+        }
+    }
+            <div class="form-group">       
+                <label class="control-label">Username</label>
+                <input name="username" class="form-control"/>                
+            </div>
+            <div class="form-group">
+                <label class="control-label">Password</label>
+                <input type="password" name="password" class="form-control" />
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Login" class="btn btn-primary" />
+                <input type="reset" value="Reset" class="btn btn-primary" />
+            </div>
+    </form>
+    </div>
+</div>
+
+</body>
+</html>

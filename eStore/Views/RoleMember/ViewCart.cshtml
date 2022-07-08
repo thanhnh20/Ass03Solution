@@ -1,0 +1,84 @@
+﻿@model IEnumerable<MyLibrary.Models.Product>
+
+@{
+    ViewData["Title"] = "ViewCart";
+    Layout = "~/Views/Shared/_LayoutMember.cshtml";
+}
+
+<h1>ViewCart</h1>
+@{
+    if(ViewBag.Message == null)
+    {
+        <form method="post" asp-action="Action">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProductName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Weight)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UnitPrice)
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Category)
+                        </th>
+                        <th></th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+            @foreach (var item in Model) {
+            
+            
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Weight)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitsInStock)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                        </td>
+                        <td>
+                            <div class="form-check">
+                                <input name="check" class="form-check-input" type="checkbox" value="@item.ProductId" id="flexCheckIndeterminate">
+                            </div>
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "Delete", new {productID = @item.ProductId})
+                        </td>
+                    </tr> 
+                    <input type="hidden" name="@item.ProductId" value="@item.UnitsInStock" class="btn btn-primary" /> 
+            }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input name="btnAction" type="submit" value="Check out" class="btn btn-primary" />    
+                <input name="btnAction" type="submit" value="Remove from cart" class="btn btn-primary" />       
+            </div>
+        </form>
+        <a asp-action="Index">Click to continues buy product</a>
+    }
+    else
+    {
+        <h3 class="text-danger">
+            @ViewBag.Message
+        </h3>
+        <a asp-action="Index">Click to buy product</a>
+    }
+    
+}
+

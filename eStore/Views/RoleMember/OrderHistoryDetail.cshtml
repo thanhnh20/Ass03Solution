@@ -1,0 +1,122 @@
+﻿@model IEnumerable<MyLibrary.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "OrderHistoryDetail";
+    Layout = "~/Views/Shared/_LayoutMember.cshtml";
+}
+
+
+<h1>Order Details History</h1>
+@{
+    double total = 0;
+}
+
+@{
+    var order = ViewData["order"] as MyLibrary.Models.Order;
+}
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            OrderId
+        </dt>
+        <dd class = "col-sm-10">
+            @order.OrderId
+        </dd> 
+        <dt class = "col-sm-2">
+            Member
+        </dt>
+        <dd class = "col-sm-10">
+            @order.Member.CompanyName
+        </dd>
+        <dt class = "col-sm-2">
+            OrderDate
+        </dt>
+        <dd class = "col-sm-10">
+            @order.OrderDate
+        </dd>   
+        <dt class = "col-sm-2">
+            RequiredDate
+        </dt>
+        <dd class = "col-sm-10">
+            @order.RequiredDate
+        </dd>   
+        <dt class = "col-sm-2">
+            ShippedDate
+        </dt>
+        <dd class = "col-sm-10">
+            @order.ShippedDate
+        </dd>   
+        <dt class = "col-sm-2">
+            Freight
+        </dt>
+        <dd class = "col-sm-10">
+            @order.Freight
+        </dd>   
+    </dl>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+                
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+                
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>          
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>   
+            <th>
+                Price
+            </th>  
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductName)               
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>           
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>  
+            
+             @{ total += ((double)item.UnitPrice * (double)item.Quantity) * (1 - (double)item.Discount/100);}   
+                @{
+                    double price = ((double)item.UnitPrice * (double)item.Quantity) * (1 - (double)item.Discount / 100);
+                }
+                <td>
+                @price
+            </td> 
+        </tr>
+        
+  }   
+    </tbody>
+</table>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Total Price
+        </dt>
+        <dd class = "col-sm-10 text-danger">
+            @{
+                total += (double)order.Freight;
+          }  
+          @total
+        </dd>   
+    </dl>
+         
+<div>
+    @Html.ActionLink("Back to Order History", "OrderHistory", new {memberID = @order.MemberId})
+</div>
